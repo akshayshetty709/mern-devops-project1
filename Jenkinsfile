@@ -50,8 +50,8 @@ pipeline {
                 '''
             }
         }
-
-     post {
+    }
+        post {
         success {
             echo '🎉 Backend deployed successfully!'
             echo "Backend running on http://localhost:4000"
@@ -62,4 +62,3 @@ pipeline {
         }
     }
   }
-}
