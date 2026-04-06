@@ -1,31 +1,18 @@
 pipeline {
     agent any
-
-    environment {
-        BACKEND_IMAGE = 'backend-app'
-        BACKEND_CONTAINER = 'backend-container'
-        BACKEND_PORT = '4000'
-        GIT_REPO = 'https://github.com/Siva290395/mern-devops-project.git'
-        GIT_BRANCH = 'main'
-    }
-
     stages {
         stage('Checkout Code from Git') {
             steps {
-                git branch: "${GIT_BRANCH}", 
-                    url: "${GIT_REPO}",
-                    credentialsId: 'github-credentials'
-                
-                echo "✅ Code checked out successfully from ${GIT_REPO}"
+                git branch: "main", url: "https://github.com/akshayshetty709/mern-devops-project1.git"
             }
         }
 
         stage('Build Backend Docker Image') {
             steps {
-                dir('backend') {
+             
                     sh '''
                         echo "Building backend image..."
-                        docker build -t ${BACKEND_IMAGE}:latest .
+                        docker build -t backend-app:latest ./backend
                     '''
                 }
             }
@@ -35,8 +22,8 @@ pipeline {
             steps {
                 sh '''
                     echo "Stopping old container..."
-                    docker stop ${BACKEND_CONTAINER} || true
-                    docker rm ${BACKEND_CONTAINER} || true
+                    docker stop backend-container || true
+                    docker rm backend-container || true
                 '''
             }
         }
@@ -46,10 +33,10 @@ pipeline {
                 sh '''
                     echo "Starting new backend container..."
                     docker run -d \
-                        --name ${BACKEND_CONTAINER} \
-                        -p ${BACKEND_PORT}:4000 \
+                        --name backend-container \
+                        -p 4000:4000 \
                         --restart unless-stopped \
-                        ${BACKEND_IMAGE}:latest
+                        backemd-app:latest
                 '''
             }
         }
@@ -61,10 +48,7 @@ pipeline {
                     sleep 5
                     
                     echo "Checking container status..."
-                    docker ps --filter "name=${BACKEND_CONTAINER}"
-                    
-                    echo "Testing backend API..."
-                    curl -f http://localhost:${BACKEND_PORT} || echo "Backend is running"
+                    docker ps --filter "name=backend-container"
                 '''
             }
         }
@@ -73,7 +57,7 @@ pipeline {
     post {
         success {
             echo '🎉 Backend deployed successfully!'
-            echo "Backend running on http://localhost:${BACKEND_PORT}"
+            echo "Backend running on http://localhost:4000"
         }
         failure {
             echo '❌ Backend deployment failed!'
