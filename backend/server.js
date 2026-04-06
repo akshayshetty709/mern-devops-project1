@@ -5,6 +5,6 @@ app.get('/', (req, res) => {
   res.send("MERN DevOps Project Running Successfully");
 });
 
-app.listen(6000, () => {
-  console.log("Server running on port 6000");
+app.listen(4000, () => {
+  console.log("Server running on port 4000");
 });
