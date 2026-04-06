@@ -15,7 +15,6 @@ pipeline {
                         docker build -t backend-app:latest ./backend
                     '''
                 }
-            }
         }
 
         stage('Stop & Remove Old Container') {
