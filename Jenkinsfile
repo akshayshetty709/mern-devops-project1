@@ -34,7 +34,7 @@ pipeline {
                         --name backend-container \
                         -p 4000:4000 \
                         --restart unless-stopped \
-                        backemd-app:latest
+                        backend-app:latest
                 '''
             }
         }
