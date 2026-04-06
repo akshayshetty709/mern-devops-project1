@@ -9,8 +9,7 @@ pipeline {
 
         stage('Build Backend Docker Image') {
             steps {
-             
-                    sh '''
+                   sh '''
                         echo "Building backend image..."
                         docker build -t backend-app:latest ./backend
                     '''
@@ -51,7 +50,6 @@ pipeline {
                 '''
             }
         }
-    }
 
     post {
         success {
