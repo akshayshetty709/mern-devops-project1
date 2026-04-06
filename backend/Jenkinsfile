@@ -9,9 +9,13 @@ pipeline {
 
     stages {
         stage('Checkout') {
-            steps {
+           steps {
+
                 git branch: 'main', 
-                    url: 'https://github.com/your-username/your-repo.git',
+
+
+
+                    url:'https://github.com/Siva290395/mern-devops-project.git' 
                     credentialsId: 'github-credentials'
             }
         }
